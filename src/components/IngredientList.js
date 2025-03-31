@@ -1,12 +1,12 @@
 // src/components/IngredientList.js
-import React from 'react';
-import CardItem from './CardItem';
-import { cardTypes } from '../data/drinksData';
+import React from "react";
+import CardItem from "./CardItem";
+import { cardTypes } from "../data/drinksData";
 
 function IngredientList({ collectedCards }) {
   const getImageUrl = (cardName) => {
-    const card = cardTypes.find(item => item.name === cardName);
-    return card ? card.imageUrl : '';
+    const card = cardTypes.find((item) => item.name === cardName);
+    return card ? card.imageUrl : "";
   };
 
   const groupedCards = collectedCards.reduce((acc, card) => {
@@ -22,14 +22,14 @@ function IngredientList({ collectedCards }) {
       ) : (
         <div className="row">
           {Object.entries(groupedCards).map(([card, count], index) => (
-            <div className="col-md-2" key={index}>
-              <CardItem 
+            <div className="col-md-4" key={index}>
+              <CardItem
                 card={
                   <span>
                     {card} <span className="badge bg-primary ms-2">{count}</span>
                   </span>
-                } 
-                imageUrl={getImageUrl(card)} 
+                }
+                imageUrl={getImageUrl(card)}
               />
             </div>
           ))}

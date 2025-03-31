@@ -1,9 +1,9 @@
 // src/components/CardCollection.js
-import React, { useState } from 'react';
-import IngredientList from './IngredientList';
-import BrewableDrinks from './BrewableDrinks';
-import BrewedDrinks from './BrewedDrinks';
-import { cardTypes, recipes } from '../data/drinksData';
+import React, { useState } from "react";
+import IngredientList from "./IngredientList";
+import BrewableDrinks from "./BrewableDrinks";
+import BrewedDrinks from "./BrewedDrinks";
+import { cardTypes, recipes } from "../data/drinksData";
 
 function CardCollection() {
   const [collectedCards, setCollectedCards] = useState([]);
@@ -19,19 +19,17 @@ function CardCollection() {
   };
 
   const sortDrinks = () => {
-    const sortedDrinks = [...brewedDrinks].sort((a, b) => 
-      a.localeCompare(b, 'vi')
-    );
+    const sortedDrinks = [...brewedDrinks].sort((a, b) => a.localeCompare(b, "vi"));
     setBrewedDrinks(sortedDrinks);
+    const sortedCards = [...collectedCards].sort((a, b) => a.localeCompare(b, "vi"));
+    setCollectedCards(sortedCards);
   };
 
   const brewDrink = (drinkName, ingredients) => {
-    const canBrew = ingredients.every(ingredient => 
-      collectedCards.includes(ingredient)
-    );
+    const canBrew = ingredients.every((ingredient) => collectedCards.includes(ingredient));
     if (canBrew) {
       let newCards = [...collectedCards];
-      ingredients.forEach(ingredient => {
+      ingredients.forEach((ingredient) => {
         const index = newCards.indexOf(ingredient);
         if (index !== -1) {
           newCards.splice(index, 1);
@@ -49,20 +47,13 @@ function CardCollection() {
         <div className="card-body">
           <div className="row">
             {/* Column chứa tiêu đề và Nguyên Liệu */}
-            <div className="col-md-6">
+            <div className="col-md-4">
               <h2 className="card-title mb-4">Bộ Sưu Tập Thẻ Của Bạn</h2>
               <div className="mb-4">
-                <button 
-                  className="btn btn-primary me-2"
-                  onClick={collectCards}
-                >
+                <button className="btn btn-primary me-2" onClick={collectCards}>
                   Thu Thập Thẻ
                 </button>
-                <button 
-                  className="btn btn-secondary"
-                  onClick={sortDrinks}
-                  disabled={brewedDrinks.length === 0}
-                >
+                <button className="btn btn-secondary" onClick={sortDrinks}>
                   Sắp Xếp Theo Tên
                 </button>
               </div>
@@ -71,12 +62,8 @@ function CardCollection() {
             </div>
 
             {/* Column chứa Đồ Uống */}
-            <div className="col-md-6">
-              <BrewableDrinks 
-                recipes={recipes} 
-                collectedCards={collectedCards} 
-                brewDrink={brewDrink} 
-              />
+            <div className="col-md-8">
+              <BrewableDrinks recipes={recipes} collectedCards={collectedCards} brewDrink={brewDrink} />
               <BrewedDrinks brewedDrinks={brewedDrinks} />
             </div>
           </div>

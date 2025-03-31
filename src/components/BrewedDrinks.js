@@ -1,10 +1,10 @@
 // src/components/BrewedDrinks.js
-import React from 'react';
-import { recipes } from '../data/drinksData';
+import React from "react";
+import { recipes } from "../data/drinksData";
 
 function BrewedDrinks({ brewedDrinks }) {
   const getImageUrl = (drinkName) => {
-    return recipes[drinkName]?.imageUrl || '/images/placeholder.png';
+    return recipes[drinkName]?.imageUrl || "/images/placeholder.png";
   };
 
   const groupedDrinks = brewedDrinks.reduce((acc, drink) => {
@@ -23,16 +23,11 @@ function BrewedDrinks({ brewedDrinks }) {
             <div className="col-md-2" key={index}>
               <div className="card mb-3">
                 <div className="card-body">
-                  <h6 className="card-title">
+                  <h6 className="card-title" style={{ height: "40px" }}>
                     {drink}
                     <span className="badge bg-primary ms-2">{count}</span>
                   </h6>
-                  <img 
-                    src={getImageUrl(drink)} 
-                    className="card-img-top" 
-                    alt={drink} 
-                    style={{ width: '90px', height: '90px', objectFit: 'cover' }} 
-                  />
+                  <img src={getImageUrl(drink)} className="card-img-top" alt={drink} />
                 </div>
               </div>
             </div>
