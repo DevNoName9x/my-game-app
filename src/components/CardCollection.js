@@ -1,3 +1,4 @@
+// src/components/CardCollection.js
 import React, { useState } from "react";
 import IngredientList from "./IngredientList";
 import BrewableDrinks from "./BrewableDrinks";
@@ -12,7 +13,7 @@ function CardCollection() {
     const newCards = [];
     for (let i = 0; i < 2; i++) {
       const randomIndex = Math.floor(Math.random() * cardTypes.length);
-      newCards.push(cardTypes[randomIndex]);
+      newCards.push(cardTypes[randomIndex].name); // Lấy name từ object
     }
     setCollectedCards([...collectedCards, ...newCards]);
   };
@@ -20,6 +21,8 @@ function CardCollection() {
   const sortDrinks = () => {
     const sortedDrinks = [...brewedDrinks].sort((a, b) => a.localeCompare(b, "vi"));
     setBrewedDrinks(sortedDrinks);
+    const sortedCard = [...collectedCards].sort((a, b) => a.localeCompare(b, "vi"));
+    setCollectedCards(sortedCard);
   };
 
   const brewDrink = (drinkName, ingredients) => {
@@ -48,7 +51,7 @@ function CardCollection() {
             <button className="btn btn-primary me-2" onClick={collectCards}>
               Collect Cards
             </button>
-            <button className="btn btn-secondary" onClick={sortDrinks} disabled={brewedDrinks.length === 0}>
+            <button className="btn btn-secondary" onClick={sortDrinks}>
               Sort by Name
             </button>
           </div>

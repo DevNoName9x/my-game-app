@@ -1,12 +1,12 @@
 // src/components/CardItem.js
 import React from "react";
 
-function CardItem({ card }) {
+function CardItem({ card, imageUrl }) {
   return (
     <div className="card mb-3">
       <div className="card-body">
         <h5 className="card-title">{card}</h5>
-        <p className="card-text">A unique collectible card!</p>
+        <img src={imageUrl} className="card-img-top" alt={card} />
       </div>
     </div>
   );

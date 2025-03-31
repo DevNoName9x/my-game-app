@@ -1,5 +1,15 @@
 // src/data/drinksData.js
-export const cardTypes = ["Cà Phê", "Trà", "Sữa Tươi", "Sữa Đặc", "Cacao", "Đường", "Muối", "Đá", "Nước"];
+export const cardTypes = [
+  { name: "Cà Phê", imageUrl: "/images/ca-phe.png" },
+  { name: "Trà", imageUrl: "/images/tra.png" },
+  { name: "Sữa Tươi", imageUrl: "/images/sua-tuoi.png" },
+  { name: "Sữa Đặc", imageUrl: "/images/sua-dac.png" },
+  { name: "Cacao", imageUrl: "/images/cacao.png" },
+  { name: "Đường", imageUrl: "/images/duong.png" },
+  { name: "Muối", imageUrl: "/images/muoi.png" },
+  { name: "Đá", imageUrl: "/images/da.png" },
+  { name: "Nước", imageUrl: "/images/nuoc.png" },
+];
 
 export const recipes = {
   "Cà Phê Đen": ["Cà Phê", "Nước", "Đường"],
