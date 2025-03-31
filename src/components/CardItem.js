@@ -6,7 +6,7 @@ function CardItem({ card, imageUrl }) {
     <div className="card mb-3">
       <div className="card-body">
         <h5 className="card-title">{card}</h5>
-        <img src={imageUrl} className="card-img-top" alt={card} />
+        <img src={imageUrl} className="card-img-top" alt="Card" />
       </div>
     </div>
   );

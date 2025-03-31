@@ -20,4 +20,5 @@ export const recipes = {
   "Trà Sữa": { ingredients: ["Trà", "Sữa Tươi", "Đường", "Đá"], imageUrl: "/images/tra-sua.png" },
   "Cacao Nóng": { ingredients: ["Cacao", "Sữa Tươi", "Đường"], imageUrl: "/images/cacao-nong.png" },
   "Trà Nóng": { ingredients: ["Trà", "Nước", "Đường"], imageUrl: "/images/tra-nong.png" },
+  "Bạc xỉu": { ingredients: ["Cà Phê", "Sữa Đặc", "Sữa Tươi"], imageUrl: "/images/bac-xiu.png" },
 };
