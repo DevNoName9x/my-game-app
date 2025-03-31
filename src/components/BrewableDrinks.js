@@ -1,9 +1,11 @@
 // src/components/BrewableDrinks.js
-import React from "react";
+import React from 'react';
 
 function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
   const canBrew = (recipeIngredients) => {
-    return recipeIngredients.every((ingredient) => collectedCards.includes(ingredient));
+    return recipeIngredients.every(ingredient => 
+      collectedCards.includes(ingredient)
+    );
   };
 
   return (
@@ -13,14 +15,24 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
         {Object.entries(recipes).map(([drinkName, { ingredients, imageUrl }]) => {
           const canMake = canBrew(ingredients);
           return (
-            <div className="col-md-3" key={drinkName}>
-              <div className={`card mb-3 ${canMake ? "border-success" : ""}`}>
+            <div className="col-md-2" key={drinkName}>
+              <div className={`card mb-3 ${canMake ? 'border-success' : ''}`}>
                 <div className="card-body">
-                  <h5 className="card-title">{drinkName}</h5>
-                  <img src={imageUrl} className="card-img-top" alt={drinkName} />
-                  <p className="card-text">Cần: {ingredients.join(", ")}</p>
+                  <h6 className="card-title">{drinkName}</h6>
+                  <img 
+                    src={imageUrl} 
+                    className="card-img-top" 
+                    alt={drinkName} 
+                    style={{ width: '90px', height: '90px', objectFit: 'cover' }} 
+                  />
+                  <p className="card-text">
+                    Cần:<br />
+                    {ingredients.map((ingredient, index) => (
+                      <span key={index}>{ingredient}<br /></span>
+                    ))}
+                  </p>
                   <button
-                    className={`btn ${canMake ? "btn-success" : "btn-secondary"}`}
+                    className={`btn ${canMake ? 'btn-success' : 'btn-secondary'}`}
                     onClick={() => brewDrink(drinkName, ingredients)}
                     disabled={!canMake}
                   >
