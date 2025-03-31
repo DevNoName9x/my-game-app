@@ -10,6 +10,12 @@ function IngredientList({ collectedCards }) {
     return card ? card.imageUrl : "";
   };
 
+  // Nhóm các thẻ và đếm số lượng
+  const groupedCards = collectedCards.reduce((acc, card) => {
+    acc[card] = (acc[card] || 0) + 1;
+    return acc;
+  }, {});
+
   return (
     <div className="col-md-6">
       <h4>Nguyên Liệu:</h4>
@@ -17,9 +23,9 @@ function IngredientList({ collectedCards }) {
         <p className="text-muted">No cards collected yet.</p>
       ) : (
         <div className="row">
-          {collectedCards.map((card, index) => (
+          {Object.entries(groupedCards).map(([card, count], index) => (
             <div className="col-md-3" key={index}>
-              <CardItem card={card} imageUrl={getImageUrl(card)} />
+              <CardItem card={`${card} (x${count})`} imageUrl={getImageUrl(card)} />
             </div>
           ))}
         </div>
