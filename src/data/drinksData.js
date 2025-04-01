@@ -22,8 +22,9 @@ export const cardTypes = [
   { name: "Ổi", imageUrl: "/images/oi.png" },
   { name: "Dứa", imageUrl: "/images/dua.png" },
   { name: "Táo", imageUrl: "/images/tao.png" },
+  { name: "Vải", imageUrl: "/images/vai.png" },
   { name: "Soda", imageUrl: "/images/soda.png" },
-  { name: "Nước Dừa", imageUrl: "/images/nuoc-dua.png" },
+  { name: "Dừa", imageUrl: "/images/dua.png" },
 ];
 
 export const recipes = {
@@ -65,7 +66,7 @@ export const recipes = {
   "Soda Chanh Dây": { ingredients: ["Soda", "Chanh Dây", "Đường", "Đá"], imageUrl: "/images/soda-chanh-day.png", price: 35000 },
   "Soda Việt Quất": { ingredients: ["Soda", "Việt Quất", "Đường", "Đá"], imageUrl: "/images/soda-viet-quat.png", price: 35000 },
   "Soda Xoài": { ingredients: ["Soda", "Xoài", "Đường", "Đá"], imageUrl: "/images/soda-xoai.png", price: 35000 },
-  "Nước Dừa": { ingredients: ["Nước Dừa", "Cơm Dừa"], imageUrl: "/images/nuoc-dua.png", price: 30000 },
+  "Nước Dừa": { ingredients: ["Dừa", "Đá"], imageUrl: "/images/nuoc-dua.png", price: 30000 },
   "Chanh Đá Xay": { ingredients: ["Chanh", "Đường", "Đá Xay"], imageUrl: "/images/chanh-da-xay.png", price: 30000 },
   "Dâu Đá Xay": { ingredients: ["Dâu Tây", "Đường", "Đá Xay"], imageUrl: "/images/dau-da-xay.png", price: 35000 },
   "Xoài Đá Xay": { ingredients: ["Xoài", "Đường", "Đá Xay"], imageUrl: "/images/xoai-da-xay.png", price: 35000 },
