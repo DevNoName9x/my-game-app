@@ -16,13 +16,14 @@ function IngredientList({ collectedCards }) {
 
   return (
     <div>
-      <h4>Nguyên Liệu:</h4>
+      <h4 className="mt-4">Thẻ Nguyên Liệu:</h4>
+      <h4 className="mt-4">Tổng Số Thẻ: {collectedCards.length}</h4>
       {collectedCards.length === 0 ? (
         <p className="text-muted">Chưa có thẻ nào được thu thập.</p>
       ) : (
         <div className="row">
           {Object.entries(groupedCards).map(([card, count], index) => (
-            <div className="col-md-4" key={index}>
+            <div className="col-6 col-md-4" key={index}>
               <CardItem
                 card={
                   <span>

@@ -43,27 +43,28 @@ function CardCollection() {
 
   return (
     <div className="container-fluid my-4">
+      <div className="card my-4">
+        <div className="card-body">
+          <div className="mb-4">
+            <button className="btn btn-primary me-2" onClick={collectCards}>
+              Thu Thập Thẻ
+            </button>
+            <button className="btn btn-secondary" onClick={sortDrinks}>
+              Sắp Xếp Theo Tên
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="card">
         <div className="card-body">
           <div className="row">
-            {/* Column chứa tiêu đề và Nguyên Liệu */}
             <div className="col-md-4">
-              <h2 className="card-title mb-4">Bộ Sưu Tập Thẻ Của Bạn</h2>
-              <div className="mb-4">
-                <button className="btn btn-primary me-2" onClick={collectCards}>
-                  Thu Thập Thẻ
-                </button>
-                <button className="btn btn-secondary" onClick={sortDrinks}>
-                  Sắp Xếp Theo Tên
-                </button>
-              </div>
-              <h4>Tổng Số Thẻ: {collectedCards.length}</h4>
               <IngredientList collectedCards={collectedCards} />
             </div>
-
-            {/* Column chứa Đồ Uống */}
-            <div className="col-md-8">
+            <div className="col-md-4">
               <BrewableDrinks recipes={recipes} collectedCards={collectedCards} brewDrink={brewDrink} />
+            </div>
+            <div className="col-md-4">
               <BrewedDrinks brewedDrinks={brewedDrinks} />
             </div>
           </div>

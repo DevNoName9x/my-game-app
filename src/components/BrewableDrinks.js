@@ -8,19 +8,17 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
 
   return (
     <>
-      <h4>Đồ Uống Có Thể Pha Chế:</h4>
+      <h4 className="mt-4">Đồ Uống Có Thể Pha Chế:</h4>
+      <h4 className="mt-4">
+        <br></br>
+      </h4>
       <div className="row">
         {Object.entries(recipes).map(([drinkName, { ingredients, imageUrl }]) => {
           const canMake = canBrew(ingredients);
           return (
-            <div className="col-md-2" key={drinkName}>
+            <div className="col-md-4" key={drinkName}>
               <div className={`card mb-3 ${canMake ? "border-success" : ""}`}>
-                <img
-                  src={imageUrl}
-                  className={`card-img-top border-bottom ${canMake ? "border-success" : ""}`}
-                  alt={drinkName}
-                  // style={{ width: "90px", height: "90px", objectFit: "cover" }}
-                />
+                <img src={imageUrl} className={`card-img-top border-bottom ${canMake ? "border-success" : ""}`} alt={drinkName} />
                 <div className="card-body">
                   <h6 className="card-title" style={{ height: "40px" }}>
                     {drinkName}

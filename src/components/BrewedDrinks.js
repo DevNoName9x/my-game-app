@@ -15,12 +15,13 @@ function BrewedDrinks({ brewedDrinks }) {
   return (
     <>
       <h4 className="mt-4">Đồ Uống Đã Pha Chế:</h4>
+      <h4 className="mt-4">Tổng Số Đồ Uống Đã Pha: {brewedDrinks.length}</h4>
       {brewedDrinks.length === 0 ? (
         <p className="text-muted">Chưa có đồ uống nào được pha chế.</p>
       ) : (
         <div className="row">
           {Object.entries(groupedDrinks).map(([drink, count], index) => (
-            <div className="col-md-2" key={index}>
+            <div className="col-md-4" key={index}>
               <div className="card mb-3">
                 <div className="card-body">
                   <h6 className="card-title" style={{ height: "40px" }}>
@@ -34,7 +35,6 @@ function BrewedDrinks({ brewedDrinks }) {
           ))}
         </div>
       )}
-      <h4 className="mt-4">Tổng Số Đồ Uống Đã Pha: {brewedDrinks.length}</h4>
     </>
   );
 }
