@@ -1,5 +1,6 @@
 // src/components/BrewedDrinks.js
 import React from "react";
+import CardItem from "./CardItem";
 import { recipes } from "../data/drinksData";
 
 function BrewedDrinks({ brewedDrinks }) {
@@ -21,16 +22,8 @@ function BrewedDrinks({ brewedDrinks }) {
       ) : (
         <div className="row">
           {Object.entries(groupedDrinks).map(([drink, count], index) => (
-            <div className="col-md-4" key={index}>
-              <div className="card mb-3">
-                <div className="card-body">
-                  <h6 className="card-title" style={{ height: "40px" }}>
-                    {drink}
-                    <span className="badge bg-primary ms-2">{count}</span>
-                  </h6>
-                  <img src={getImageUrl(drink)} className="card-img-top" alt={drink} />
-                </div>
-              </div>
+            <div className="col-lg-4" key={index}>
+              <CardItem card={drink} count={count} imageUrl={getImageUrl(drink)} />
             </div>
           ))}
         </div>

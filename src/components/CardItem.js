@@ -1,17 +1,16 @@
 // src/components/CardItem.js
-import React from 'react';
+import React from "react";
 
-function CardItem({ card, imageUrl }) {
+function CardItem({ card, count, imageUrl }) {
   return (
     <div className="card mb-3">
       <div className="card-body">
-        <h6 className="card-title">{card}</h6>
-        <img 
-          src={imageUrl} 
-          className="card-img-top" 
-          alt="Card" 
-          style={{ width: '90px', height: '90px', objectFit: 'cover' }} 
-        />
+        <img src={imageUrl} className="card-img-top" alt="Card" />
+        <h6 className="card-title">
+          <span>
+            {card} {count && <span className="badge bg-primary ms-2">{count}</span>}
+          </span>
+        </h6>
       </div>
     </div>
   );

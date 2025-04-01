@@ -23,15 +23,8 @@ function IngredientList({ collectedCards }) {
       ) : (
         <div className="row">
           {Object.entries(groupedCards).map(([card, count], index) => (
-            <div className="col-6 col-md-4" key={index}>
-              <CardItem
-                card={
-                  <span>
-                    {card} <span className="badge bg-primary ms-2">{count}</span>
-                  </span>
-                }
-                imageUrl={getImageUrl(card)}
-              />
+            <div className="col-lg-4" key={index}>
+              <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
             </div>
           ))}
         </div>
