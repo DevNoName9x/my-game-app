@@ -25,6 +25,10 @@ export const cardTypes = [
   { name: "Vải", imageUrl: "/images/vai.png" },
   { name: "Soda", imageUrl: "/images/soda.png" },
   { name: "Dừa", imageUrl: "/images/dua.png" },
+  { name: "Cam", imageUrl: "/images/dua.png" },
+  { name: "Tắc", imageUrl: "/images/dua.png" },
+  { name: "Chanh Dây", imageUrl: "/images/dua.png" },
+  { name: "Việt Quất", imageUrl: "/images/dua.png" },
 ];
 
 export const recipes = {

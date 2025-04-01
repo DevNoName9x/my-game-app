@@ -1,7 +1,7 @@
 // src/components/BrewableDrinks.js
 import React from "react";
 
-function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
+function BrewableDrinks({ recipes, collectedCards, brewDrink, displayedRecipes, setDisplayedRecipes }) {
   const canBrew = (recipeIngredients) => {
     return recipeIngredients.every((ingredient) => collectedCards.includes(ingredient));
   };
@@ -9,16 +9,14 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
   return (
     <>
       <h4 className="mt-4">Đồ Uống Có Thể Pha Chế:</h4>
-      <h4 className="mt-4">
-        <br></br>
-      </h4>
       <div className="row">
-        {Object.entries(recipes).map(([drinkName, { ingredients, imageUrl }]) => {
+        {displayedRecipes.map(([drinkName, { ingredients, imageUrl }], index) => {
           const canMake = canBrew(ingredients);
+          const validImageUrl = imageUrl && imageUrl.trim() !== "" ? imageUrl : "/images/placeholder.png";
           return (
-            <div className="col-md-4" key={drinkName}>
+            <div className="col-lg-4" key={index}>
               <div className={`card mb-3 ${canMake ? "border-success" : ""}`}>
-                <img src={imageUrl} className={`card-img-top border-bottom ${canMake ? "border-success" : ""}`} alt={drinkName} />
+                <img src={validImageUrl} className={`card-img-top border-bottom ${canMake ? "border-success" : ""}`} alt={drinkName} />
                 <div className="card-body">
                   <h6 className="card-title" style={{ height: "40px" }}>
                     {drinkName}
@@ -26,8 +24,8 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
                   <p className="card-text" style={{ height: "120px" }}>
                     Cần:
                     <br />
-                    {ingredients.map((ingredient, index) => (
-                      <span key={index}>
+                    {ingredients.map((ingredient, idx) => (
+                      <span key={idx}>
                         {ingredient}
                         <br />
                       </span>
@@ -35,7 +33,7 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink }) {
                   </p>
                   <button
                     className={`btn ${canMake ? "btn-success" : "btn-secondary"}`}
-                    onClick={() => brewDrink(drinkName, ingredients)}
+                    onClick={() => brewDrink(drinkName, ingredients, index)}
                     disabled={!canMake}
                   >
                     Pha Chế
