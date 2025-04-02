@@ -18,8 +18,9 @@ function IngredientList({ collectedCards }) {
 
   return (
     <div>
-      <h4>Thẻ Nguyên Liệu:</h4>
-      <h4>Tổng Số Thẻ: {collectedCards.length}</h4>
+      <h4>
+        Thẻ Nguyên Liệu: <span style={{ color: "red" }}>{collectedCards.length} </span>{" "}
+      </h4>
       {collectedCards.length === 0 ? (
         <p className="text-muted">Chưa có thẻ nào được thu thập.</p>
       ) : (
@@ -31,7 +32,7 @@ function IngredientList({ collectedCards }) {
                 display: "flex",
                 flexWrap: "wrap",
                 overflowY: "auto",
-                maxHeight: "400px", // 2 dòng CardItem
+                maxHeight: "450px", // 2 dòng CardItem
                 padding: "10px",
                 border: "1px solid #ddd",
                 borderRadius: "4px",

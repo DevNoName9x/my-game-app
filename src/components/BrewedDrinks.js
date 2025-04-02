@@ -17,8 +17,9 @@ function BrewedDrinks({ brewedDrinks }) {
 
   return (
     <>
-      <h4>Đồ Uống Đã Pha Chế:</h4>
-      <h4>Tổng Số Đồ Uống Đã Pha: {brewedDrinks.length}</h4>
+      <h4>
+        Đồ Uống Đã Pha Chế - <span style={{ color: "red" }}> {brewedDrinks.length} </span>
+      </h4>
       {brewedDrinks.length === 0 ? (
         <p className="text-muted">Chưa có đồ uống nào được pha chế.</p>
       ) : (
@@ -29,7 +30,7 @@ function BrewedDrinks({ brewedDrinks }) {
                 display: "flex",
                 flexWrap: "wrap",
                 overflowY: "auto",
-                maxHeight: "350px", // 2 dòng CardItem (mỗi dòng ~150px)
+                maxHeight: "450px", // 2 dòng CardItem (mỗi dòng ~150px)
                 padding: "10px",
                 border: "1px solid #ddd",
                 borderRadius: "4px",
