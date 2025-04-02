@@ -3,7 +3,7 @@ import React from "react";
 
 function Controls({ onCollectCards, onSortDrinks }) {
   return (
-    <div className="mb-4">
+    <div>
       <button className="btn btn-primary me-2" onClick={onCollectCards}>
         Thu Thập Thẻ
       </button>

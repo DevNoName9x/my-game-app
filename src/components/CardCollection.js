@@ -27,7 +27,7 @@ function CardCollection() {
     const initialRecipePool = Object.entries(recipes);
     setRecipePool(initialRecipePool);
     setDisplayedRecipes(getSortedUnusedRecipes(initialRecipePool, brewedDrinks));
-  }, []);
+  }, [brewedDrinks]);
 
   // Hàm lấy tối đa 3 công thức chưa dùng, sắp xếp theo tên
   const getSortedUnusedRecipes = (pool, usedRecipes) => {
@@ -84,7 +84,7 @@ function CardCollection() {
   };
 
   return (
-    <div className="container-fluid my-4">
+    <div className="container-fluid my-2">
       <div className="card my-4">
         <div className="card-body">
           <PoolDisplay

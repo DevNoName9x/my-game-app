@@ -14,19 +14,43 @@ function IngredientList({ collectedCards }) {
     return acc;
   }, {});
 
+  const cardsList = Object.entries(groupedCards);
+
   return (
     <div>
-      <h4 className="mt-4">Thẻ Nguyên Liệu:</h4>
-      <h4 className="mt-4">Tổng Số Thẻ: {collectedCards.length}</h4>
+      <h4>Thẻ Nguyên Liệu:</h4>
+      <h4>Tổng Số Thẻ: {collectedCards.length}</h4>
       {collectedCards.length === 0 ? (
         <p className="text-muted">Chưa có thẻ nào được thu thập.</p>
       ) : (
         <div className="row">
-          {Object.entries(groupedCards).map(([card, count], index) => (
-            <div className="col-lg-4" key={index}>
-              <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
+          {/* Bên trái */}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                overflowY: "auto",
+                maxHeight: "400px", // 2 dòng CardItem
+                padding: "10px",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+              }}
+            >
+              {cardsList.map(([card, count], index) => (
+                <div
+                  key={index}
+                  style={{
+                    flex: "0 0 33.33%", // 3 ô/dòng
+                    minWidth: "100px", // Chiều rộng tối thiểu
+                    marginBottom: "10px",
+                  }}
+                >
+                  <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       )}
     </div>

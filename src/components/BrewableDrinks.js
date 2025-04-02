@@ -8,16 +8,16 @@ function BrewableDrinks({ recipes, collectedCards, brewDrink, displayedRecipes, 
 
   return (
     <>
-      <h4 className="mt-4">Đồ Uống Có Thể Pha Chế:</h4>
+      <h4 >Đồ Uống Có Thể Pha Chế:</h4>
       {displayedRecipes.length === 0 ? (
-        <p className="text-muted mt-4">Không còn công thức nào để hiển thị.</p>
+        <p className="text-muted">Không còn công thức nào để hiển thị.</p>
       ) : (
         <div className="row">
           {displayedRecipes.map(([drinkName, { ingredients, imageUrl }], index) => {
             const canMake = canBrew(ingredients);
             const validImageUrl = imageUrl && imageUrl.trim() !== "" ? imageUrl : "/images/placeholder.png";
             return (
-              <div className="col-lg-4" key={index}>
+              <div className="col-md-4" key={index}>
                 <div className={`card mb-3 ${canMake ? "border-success" : ""}`}>
                   <img
                     src={validImageUrl}
