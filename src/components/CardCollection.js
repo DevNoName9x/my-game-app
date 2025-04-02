@@ -3,33 +3,56 @@ import React, { useState, useEffect } from "react";
 import IngredientList from "./IngredientList";
 import BrewableDrinks from "./BrewableDrinks";
 import BrewedDrinks from "./BrewedDrinks";
+import PoolDisplay from "./PoolDisplay";
+import Controls from "./Controls";
 import { cardTypes, recipes } from "../data/drinksData";
 
 function CardCollection() {
   const [collectedCards, setCollectedCards] = useState([]);
   const [brewedDrinks, setBrewedDrinks] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
+  const [ingredientPool, setIngredientPool] = useState([]);
+  const [recipePool, setRecipePool] = useState([]);
 
-  // Hàm chọn ngẫu nhiên tối đa 3 công thức chưa dùng
-  const getRandomUnusedRecipes = (usedRecipes) => {
-    const recipeEntries = Object.entries(recipes);
-    const unusedRecipes = recipeEntries.filter(([name]) => !usedRecipes.includes(name));
-    const shuffled = [...unusedRecipes].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, Math.min(3, unusedRecipes.length));
-  };
-
-  // Khởi tạo 3 công thức ngẫu nhiên khi component mount
+  // Khởi tạo pool nguyên liệu dựa trên quantity của cardTypes
   useEffect(() => {
-    setDisplayedRecipes(getRandomUnusedRecipes(brewedDrinks));
+    const initialPool = cardTypes.reduce((acc, card) => {
+      return acc.concat(Array(card.quantity).fill(card.name));
+    }, []);
+    setIngredientPool(initialPool);
   }, []);
 
+  // Khởi tạo pool công thức và 3 công thức ban đầu
+  useEffect(() => {
+    const initialRecipePool = Object.entries(recipes);
+    setRecipePool(initialRecipePool);
+    setDisplayedRecipes(getSortedUnusedRecipes(initialRecipePool, brewedDrinks));
+  }, []);
+
+  // Hàm lấy tối đa 3 công thức chưa dùng, sắp xếp theo tên
+  const getSortedUnusedRecipes = (pool, usedRecipes) => {
+    const unusedRecipes = pool.filter(([name]) => !usedRecipes.includes(name));
+    const sorted = unusedRecipes.sort((a, b) => a[0].localeCompare(b[0], "vi"));
+    return sorted.slice(0, Math.min(3, unusedRecipes.length));
+  };
+
   const collectCards = () => {
-    const newCards = [];
-    for (let i = 0; i < 2; i++) {
-      const randomIndex = Math.floor(Math.random() * cardTypes.length);
-      newCards.push(cardTypes[randomIndex].name);
+    if (ingredientPool.length < 2) {
+      alert("Không còn đủ thẻ nguyên liệu để thu thập!");
+      return;
     }
+
+    const newCards = [];
+    let newPool = [...ingredientPool];
+
+    for (let i = 0; i < 2; i++) {
+      const randomIndex = Math.floor(Math.random() * newPool.length);
+      newCards.push(newPool[randomIndex]);
+      newPool.splice(randomIndex, 1);
+    }
+
     setCollectedCards([...collectedCards, ...newCards]);
+    setIngredientPool(newPool);
   };
 
   const sortDrinks = () => {
@@ -54,18 +77,8 @@ function CardCollection() {
       setBrewedDrinks(newBrewedDrinks);
       alert(`Bạn đã pha chế thành công ${drinkName}!`);
 
-      // Thay thế công thức đã pha bằng một công thức chưa dùng
       const usedRecipes = [...newBrewedDrinks, ...displayedRecipes.map(([name]) => name).filter((name) => name !== drinkName)];
-      const recipeEntries = Object.entries(recipes);
-      const availableRecipes = recipeEntries.filter(([name]) => !usedRecipes.includes(name));
-
-      const newDisplayedRecipes = [...displayedRecipes];
-      if (availableRecipes.length > 0) {
-        const randomIndex = Math.floor(Math.random() * availableRecipes.length);
-        newDisplayedRecipes[index] = availableRecipes[randomIndex];
-      } else {
-        newDisplayedRecipes.splice(index, 1); // Xóa công thức nếu không còn công thức khả dụng
-      }
+      const newDisplayedRecipes = getSortedUnusedRecipes(recipePool, usedRecipes);
       setDisplayedRecipes(newDisplayedRecipes);
     }
   };
@@ -74,14 +87,13 @@ function CardCollection() {
     <div className="container-fluid my-4">
       <div className="card my-4">
         <div className="card-body">
-          <div className="mb-4">
-            <button className="btn btn-primary me-2" onClick={collectCards}>
-              Thu Thập Thẻ
-            </button>
-            <button className="btn btn-secondary" onClick={sortDrinks}>
-              Sắp Xếp Theo Tên
-            </button>
-          </div>
+          <PoolDisplay
+            ingredientPool={ingredientPool}
+            recipePool={recipePool}
+            brewedDrinks={brewedDrinks}
+            displayedRecipes={displayedRecipes}
+          />
+          <Controls onCollectCards={collectCards} onSortDrinks={sortDrinks} />
         </div>
       </div>
       <div className="card">
