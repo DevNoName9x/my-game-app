@@ -30,6 +30,7 @@ export const cardTypes = [
   { name: "Tắc", imageUrl: "/images/dua.png" },
   { name: "Chanh Dây", imageUrl: "/images/dua.png" },
   { name: "Việt Quất", imageUrl: "/images/dua.png" },
+  { name: "Gừng", imageUrl: "/images/dua.png" },
 ];
 
 export const recipes = {
@@ -66,7 +67,7 @@ export const recipes = {
   "Sữa Tươi Cacao": { ingredients: ["Cacao", "Đá", "Đường", "Sữa Tươi"], imageUrl: "/images/sua-tuoi-cacao.png", price: 35000 },
   "Sữa Tươi Matcha": { ingredients: ["Đá", "Đường", "Matcha", "Sữa Tươi"], imageUrl: "/images/sua-tuoi-matcha.png", price: 35000 },
   "Sữa Tươi Trân Châu Đường Đen": {
-    ingredients: ["Đường Đen", "Sữa Tươi", "Trân Châu"],
+    ingredients: ["Đường", "Sữa Tươi", "Trân Châu"],
     imageUrl: "/images/sua-tuoi-tran-chau-duong-den.png",
     price: 40000,
   },

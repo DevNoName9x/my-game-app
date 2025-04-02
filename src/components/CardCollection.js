@@ -10,16 +10,17 @@ function CardCollection() {
   const [brewedDrinks, setBrewedDrinks] = useState([]);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
 
-  // Hàm chọn ngẫu nhiên 3 công thức
-  const getRandomRecipes = () => {
+  // Hàm chọn ngẫu nhiên tối đa 3 công thức chưa dùng
+  const getRandomUnusedRecipes = (usedRecipes) => {
     const recipeEntries = Object.entries(recipes);
-    const shuffled = [...recipeEntries].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
+    const unusedRecipes = recipeEntries.filter(([name]) => !usedRecipes.includes(name));
+    const shuffled = [...unusedRecipes].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(3, unusedRecipes.length));
   };
 
   // Khởi tạo 3 công thức ngẫu nhiên khi component mount
   useEffect(() => {
-    setDisplayedRecipes(getRandomRecipes());
+    setDisplayedRecipes(getRandomUnusedRecipes(brewedDrinks));
   }, []);
 
   const collectCards = () => {
@@ -43,25 +44,29 @@ function CardCollection() {
     if (canBrew) {
       let newCards = [...collectedCards];
       ingredients.forEach((ingredient) => {
-        const index = newCards.indexOf(ingredient);
-        if (index !== -1) {
-          newCards.splice(index, 1);
+        const idx = newCards.indexOf(ingredient);
+        if (idx !== -1) {
+          newCards.splice(idx, 1);
         }
       });
       setCollectedCards(newCards);
-      setBrewedDrinks([...brewedDrinks, drinkName]);
+      const newBrewedDrinks = [...brewedDrinks, drinkName];
+      setBrewedDrinks(newBrewedDrinks);
       alert(`Bạn đã pha chế thành công ${drinkName}!`);
 
-      // Thay thế công thức đã pha bằng một công thức ngẫu nhiên mới
+      // Thay thế công thức đã pha bằng một công thức chưa dùng
+      const usedRecipes = [...newBrewedDrinks, ...displayedRecipes.map(([name]) => name).filter((name) => name !== drinkName)];
       const recipeEntries = Object.entries(recipes);
-      const availableRecipes = recipeEntries.filter(([name]) => !displayedRecipes.some(([dName]) => dName === name));
+      const availableRecipes = recipeEntries.filter(([name]) => !usedRecipes.includes(name));
+
+      const newDisplayedRecipes = [...displayedRecipes];
       if (availableRecipes.length > 0) {
         const randomIndex = Math.floor(Math.random() * availableRecipes.length);
-        const newRecipe = availableRecipes[randomIndex];
-        const newDisplayedRecipes = [...displayedRecipes];
-        newDisplayedRecipes[index] = newRecipe;
-        setDisplayedRecipes(newDisplayedRecipes);
+        newDisplayedRecipes[index] = availableRecipes[randomIndex];
+      } else {
+        newDisplayedRecipes.splice(index, 1); // Xóa công thức nếu không còn công thức khả dụng
       }
+      setDisplayedRecipes(newDisplayedRecipes);
     }
   };
 
