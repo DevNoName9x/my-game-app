@@ -18,40 +18,32 @@ function IngredientList({ collectedCards }) {
 
   return (
     <div>
-      <h4>
-        Thẻ Nguyên Liệu: <span style={{ color: "red" }}>{collectedCards.length} </span>{" "}
+      <h4 style={{ height: "33px" }}>
+        Thẻ Nguyên Liệu: <span className="badge bg-success ms-2">{collectedCards.length} </span>
       </h4>
       {collectedCards.length === 0 ? (
         <p className="text-muted">Chưa có thẻ nào được thu thập.</p>
       ) : (
-        <div className="row">
-          {/* Bên trái */}
-          <div>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            overflowY: "auto",
+            maxHeight: "500px",
+          }}
+        >
+          {cardsList.map(([card, count], index) => (
             <div
+              key={index}
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                overflowY: "auto",
-                maxHeight: "450px", // 2 dòng CardItem
-                padding: "10px",
-                border: "1px solid #ddd",
-                borderRadius: "4px",
+                flex: "0 0 32%", // Luôn 3 ô/dòng
+                minWidth: "100px",
+                margin: "2px",
               }}
             >
-              {cardsList.map(([card, count], index) => (
-                <div
-                  key={index}
-                  style={{
-                    flex: "0 0 33.33%", // 3 ô/dòng
-                    minWidth: "100px", // Chiều rộng tối thiểu
-                    marginBottom: "10px",
-                  }}
-                >
-                  <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
-                </div>
-              ))}
+              <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
             </div>
-          </div>
+          ))}
         </div>
       )}
     </div>

@@ -6,6 +6,8 @@ import BrewedDrinks from "./BrewedDrinks";
 import PoolDisplay from "./PoolDisplay";
 import Controls from "./Controls";
 import { cardTypes, recipes } from "../data/drinksData";
+import { ToastContainer, toast } from "react-toastify"; // Thêm react-toastify
+import "react-toastify/dist/ReactToastify.css"; // CSS cho toast
 
 function CardCollection() {
   const [collectedCards, setCollectedCards] = useState([]);
@@ -14,7 +16,6 @@ function CardCollection() {
   const [ingredientPool, setIngredientPool] = useState([]);
   const [recipePool, setRecipePool] = useState([]);
 
-  // Khởi tạo pool nguyên liệu dựa trên quantity của cardTypes
   useEffect(() => {
     const initialPool = cardTypes.reduce((acc, card) => {
       return acc.concat(Array(card.quantity).fill(card.name));
@@ -22,14 +23,12 @@ function CardCollection() {
     setIngredientPool(initialPool);
   }, []);
 
-  // Khởi tạo pool công thức và 3 công thức ban đầu
   useEffect(() => {
     const initialRecipePool = Object.entries(recipes);
     setRecipePool(initialRecipePool);
     setDisplayedRecipes(getSortedUnusedRecipes(initialRecipePool, brewedDrinks));
   }, [brewedDrinks]);
 
-  // Hàm lấy tối đa 3 công thức chưa dùng, sắp xếp theo tên
   const getSortedUnusedRecipes = (pool, usedRecipes) => {
     const unusedRecipes = pool.filter(([name]) => !usedRecipes.includes(name));
     const sorted = unusedRecipes.sort((a, b) => a[0].localeCompare(b[0], "vi"));
@@ -38,7 +37,7 @@ function CardCollection() {
 
   const collectCards = () => {
     if (ingredientPool.length < 2) {
-      alert("Không còn đủ thẻ nguyên liệu để thu thập!");
+      toast.error("Không còn đủ thẻ nguyên liệu để thu thập!");
       return;
     }
 
@@ -75,7 +74,7 @@ function CardCollection() {
       setCollectedCards(newCards);
       const newBrewedDrinks = [...brewedDrinks, drinkName];
       setBrewedDrinks(newBrewedDrinks);
-      alert(`Bạn đã pha chế thành công ${drinkName}!`);
+      toast.success(`Bạn đã pha chế thành công ${drinkName}!`); // Thay alert bằng toast
 
       const usedRecipes = [...newBrewedDrinks, ...displayedRecipes.map(([name]) => name).filter((name) => name !== drinkName)];
       const newDisplayedRecipes = getSortedUnusedRecipes(recipePool, usedRecipes);
@@ -85,38 +84,34 @@ function CardCollection() {
 
   return (
     <div className="container-fluid my-2">
-      <div className="card my-4">
-        <div className="card-body">
-          <PoolDisplay
-            ingredientPool={ingredientPool}
-            recipePool={recipePool}
-            brewedDrinks={brewedDrinks}
+      <div className="my-4">
+        <PoolDisplay
+          ingredientPool={ingredientPool}
+          recipePool={recipePool}
+          brewedDrinks={brewedDrinks}
+          displayedRecipes={displayedRecipes}
+        />
+        <Controls onCollectCards={collectCards} onSortDrinks={sortDrinks} />
+      </div>
+      <hr />
+      <div className="row">
+        <div className="col-lg-4">
+          <IngredientList collectedCards={collectedCards} />
+        </div>
+        <div className="col-lg-4">
+          <BrewableDrinks
+            recipes={recipes}
+            collectedCards={collectedCards}
+            brewDrink={brewDrink}
             displayedRecipes={displayedRecipes}
+            setDisplayedRecipes={setDisplayedRecipes}
           />
-          <Controls onCollectCards={collectCards} onSortDrinks={sortDrinks} />
+        </div>
+        <div className="col-lg-4">
+          <BrewedDrinks brewedDrinks={brewedDrinks} />
         </div>
       </div>
-      <div className="card">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-lg-4">
-              <IngredientList collectedCards={collectedCards} />
-            </div>
-            <div className="col-lg-4">
-              <BrewableDrinks
-                recipes={recipes}
-                collectedCards={collectedCards}
-                brewDrink={brewDrink}
-                displayedRecipes={displayedRecipes}
-                setDisplayedRecipes={setDisplayedRecipes}
-              />
-            </div>
-            <div className="col-lg-4">
-              <BrewedDrinks brewedDrinks={brewedDrinks} />
-            </div>
-          </div>
-        </div>
-      </div>
+      <ToastContainer /> {/* Thêm ToastContainer */}
     </div>
   );
 }
