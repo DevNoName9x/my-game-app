@@ -9,7 +9,7 @@ function CardItem({ card, count, imageUrl }) {
       <div className="card-body">
         <img src={validImageUrl} className="card-img-top" alt={card} />
         <h6 className="card-title" style={{ height: "45px" }}>
-          <span>
+          <span style={{ fontSize: "14px" }}>
             {card} {count && <span className="badge bg-primary ms-2">{count}</span>}
           </span>
         </h6>

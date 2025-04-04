@@ -6,7 +6,7 @@ export const cardTypes = [
   { name: "Trà", imageUrl: "/images/tra.png", quantity: 20 },
   { name: "Nước", imageUrl: "/images/nuoc.png", quantity: 16 },
   { name: "Đường", imageUrl: "/images/duong.png", quantity: 30 },
-  { name: "Đá", imageUrl: "/images/da.png", quantity: 20 },
+  { name: "Đá", imageUrl: "/images/da.png", quantity: 30 },
 
   { name: "Đá Xay", imageUrl: "/images/da-xay.png", quantity: 10 },
   { name: "Cacao", imageUrl: "/images/cacao.png", quantity: 10 },

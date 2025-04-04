@@ -8,17 +8,18 @@ function BrewedDrinks({ brewedDrinks }) {
     return recipes[drinkName]?.imageUrl || "";
   };
 
+  console.table(brewedDrinks);
   const groupedDrinks = brewedDrinks.reduce((acc, drink) => {
     acc[drink] = (acc[drink] || 0) + 1;
     return acc;
   }, {});
-
   const drinksList = Object.entries(groupedDrinks);
 
   return (
     <div>
       <h4 style={{ height: "33px" }}>
-        Đồ Uống Đã Pha Chế: <span className="badge bg-success ms-2"> {brewedDrinks.length} </span>
+        Đồ Uống Đã Pha Chế:{" "}
+        <span className="badge bg-success ms-2"> {brewedDrinks.length} </span>
       </h4>
       {brewedDrinks.length === 0 ? (
         <p className="text-muted">Chưa có đồ uống nào được pha chế.</p>
@@ -40,7 +41,11 @@ function BrewedDrinks({ brewedDrinks }) {
                 margin: "2px",
               }}
             >
-              <CardItem card={drink} count={count} imageUrl={getImageUrl(drink)} />
+              <CardItem
+                card={drink}
+                count={count}
+                imageUrl={getImageUrl(drink)}
+              />
             </div>
           ))}
         </div>

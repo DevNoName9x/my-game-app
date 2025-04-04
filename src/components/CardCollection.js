@@ -1,4 +1,3 @@
-// src/components/CardCollection.js
 import React, { useState, useEffect } from "react";
 import IngredientList from "./IngredientList";
 import BrewableDrinks from "./BrewableDrinks";
@@ -6,15 +5,15 @@ import BrewedDrinks from "./BrewedDrinks";
 import PoolDisplay from "./PoolDisplay";
 import Controls from "./Controls";
 import { cardTypes, recipes } from "../data/drinksData";
-import { ToastContainer, toast } from "react-toastify"; // Thêm react-toastify
-import "react-toastify/dist/ReactToastify.css"; // CSS cho toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CardCollection() {
   const [collectedCards, setCollectedCards] = useState([]);
   const [brewedDrinks, setBrewedDrinks] = useState([]);
-  const [displayedRecipes, setDisplayedRecipes] = useState([]);
   const [ingredientPool, setIngredientPool] = useState([]);
   const [recipePool, setRecipePool] = useState([]);
+  const [displayedRecipes, setDisplayedRecipes] = useState([]);
 
   useEffect(() => {
     const initialPool = cardTypes.reduce((acc, card) => {
@@ -26,14 +25,11 @@ function CardCollection() {
   useEffect(() => {
     const initialRecipePool = Object.entries(recipes);
     setRecipePool(initialRecipePool);
-    setDisplayedRecipes(getSortedUnusedRecipes(initialRecipePool, brewedDrinks));
+    // Chọn ngẫu nhiên 3 công thức khi khởi tạo
+    const unusedRecipes = initialRecipePool.filter(([name]) => !brewedDrinks.includes(name));
+    const shuffled = [...unusedRecipes].sort(() => Math.random() - 0.5);
+    setDisplayedRecipes(shuffled.slice(0, Math.min(3, unusedRecipes.length)));
   }, [brewedDrinks]);
-
-  const getSortedUnusedRecipes = (pool, usedRecipes) => {
-    const unusedRecipes = pool.filter(([name]) => !usedRecipes.includes(name));
-    const sorted = unusedRecipes.sort((a, b) => a[0].localeCompare(b[0], "vi"));
-    return sorted.slice(0, Math.min(3, unusedRecipes.length));
-  };
 
   const collectCards = () => {
     if (ingredientPool.length < 2) {
@@ -61,7 +57,7 @@ function CardCollection() {
     setCollectedCards(sortedCards);
   };
 
-  const brewDrink = (drinkName, ingredients, index) => {
+  const brewDrink = (drinkName, ingredients, index, replaceRecipeCallback) => {
     const canBrew = ingredients.every((ingredient) => collectedCards.includes(ingredient));
     if (canBrew) {
       let newCards = [...collectedCards];
@@ -74,11 +70,9 @@ function CardCollection() {
       setCollectedCards(newCards);
       const newBrewedDrinks = [...brewedDrinks, drinkName];
       setBrewedDrinks(newBrewedDrinks);
-      toast.success(`Bạn đã pha chế thành công ${drinkName}!`); // Thay alert bằng toast
-
-      const usedRecipes = [...newBrewedDrinks, ...displayedRecipes.map(([name]) => name).filter((name) => name !== drinkName)];
-      const newDisplayedRecipes = getSortedUnusedRecipes(recipePool, usedRecipes);
-      setDisplayedRecipes(newDisplayedRecipes);
+      toast.success(`Bạn đã pha chế thành công ${drinkName}!`);
+      // Gọi hàm thay thế công thức tại vị trí vừa pha chế
+      replaceRecipeCallback(index, newBrewedDrinks);
     }
   };
 
@@ -103,6 +97,8 @@ function CardCollection() {
             recipes={recipes}
             collectedCards={collectedCards}
             brewDrink={brewDrink}
+            recipePool={recipePool}
+            brewedDrinks={brewedDrinks}
             displayedRecipes={displayedRecipes}
             setDisplayedRecipes={setDisplayedRecipes}
           />
@@ -111,7 +107,7 @@ function CardCollection() {
           <BrewedDrinks brewedDrinks={brewedDrinks} />
         </div>
       </div>
-      <ToastContainer /> {/* Thêm ToastContainer */}
+      <ToastContainer />
     </div>
   );
 }

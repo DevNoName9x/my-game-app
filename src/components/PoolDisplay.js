@@ -1,4 +1,3 @@
-// src/components/PoolDisplay.js
 import React from "react";
 
 function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipes }) {
@@ -13,7 +12,11 @@ function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipe
   };
 
   const { total: ingredientTotal, grouped: ingredientGrouped } = getIngredientPoolStats();
-  const recipeTotal = recipePool.length - brewedDrinks.length - displayedRecipes.length;
+
+  // Tính số công thức còn lại trong pool
+  // Nếu displayedRecipes là null, coi như không có công thức đang hiển thị
+  const displayedCount = displayedRecipes && displayedRecipes.length > 0 ? displayedRecipes.length : 0;
+  const recipeTotal = recipePool.length - brewedDrinks.length - displayedCount;
 
   return (
     <div className="row mb-4">
@@ -23,21 +26,20 @@ function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipe
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap", // Cho phép xuống dòng
-            overflowY: "auto", // Cuộn dọc
-            maxHeight: "100px", // Giới hạn chiều cao để hiển thị 2 dòng
+            flexWrap: "wrap",
+            overflowY: "auto",
+            maxHeight: "100px",
             padding: "10px",
-            border: "1px solid #ddd", // Viền để rõ khu vực
-            borderRadius: "4px",
+           
           }}
         >
           {Object.entries(ingredientGrouped).map(([card, count]) => (
             <div
               key={card}
               style={{
-                flex: "0 0 25%", // Mỗi ô chiếm 25% (4 ô trên 1 dòng)
-                minWidth: "150px", // Chiều rộng tối thiểu để nội dung rõ ràng
-                marginBottom: "10px", // Khoảng cách giữa các dòng
+                flex: "0 0 25%",
+                minWidth: "150px",
+                marginBottom: "10px",
                 padding: "5px",
                 border: "1px solid #ccc",
                 borderRadius: "4px",

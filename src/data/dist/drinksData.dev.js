@@ -7,97 +7,128 @@ exports.recipes = exports.cardTypes = void 0;
 // src/data/drinksData.js
 var cardTypes = [{
   name: "Cà Phê",
-  imageUrl: "/images/ca-phe.png"
+  imageUrl: "/images/ca-phe.png",
+  quantity: 16
 }, {
   name: "Sữa Đặc",
-  imageUrl: "/images/sua-dac.png"
+  imageUrl: "/images/sua-dac.png",
+  quantity: 16
 }, {
   name: "Sữa Tươi",
-  imageUrl: "/images/sua-tuoi.png"
+  imageUrl: "/images/sua-tuoi.png",
+  quantity: 16
 }, {
   name: "Trà",
-  imageUrl: "/images/tra.png"
+  imageUrl: "/images/tra.png",
+  quantity: 20
 }, {
   name: "Nước",
-  imageUrl: "/images/nuoc.png"
+  imageUrl: "/images/nuoc.png",
+  quantity: 16
 }, {
   name: "Đường",
-  imageUrl: "/images/duong.png"
+  imageUrl: "/images/duong.png",
+  quantity: 30
 }, {
   name: "Đá",
-  imageUrl: "/images/da.png"
+  imageUrl: "/images/da.png",
+  quantity: 30
 }, {
   name: "Đá Xay",
-  imageUrl: "/images/da-xay.png"
+  imageUrl: "/images/da-xay.png",
+  quantity: 10
 }, {
   name: "Cacao",
-  imageUrl: "/images/cacao.png"
+  imageUrl: "/images/cacao.png",
+  quantity: 10
 }, {
   name: "Matcha",
-  imageUrl: "/images/matcha.png"
-}, {
-  name: "Chocolate",
-  imageUrl: "/images/chocolate.png"
-}, {
-  name: "Trân Châu",
-  imageUrl: "/images/tran-chau.png"
-}, {
-  name: "Chanh",
-  imageUrl: "/images/chanh.png"
-}, {
-  name: "Mật Ong",
-  imageUrl: "/images/mat-ong.png"
-}, {
-  name: "Đào",
-  imageUrl: "/images/dao.png"
-}, {
-  name: "Sả",
-  imageUrl: "/images/sa.png"
-}, {
-  name: "Dâu Tây",
-  imageUrl: "/images/dau-tay.png"
-}, {
-  name: "Xoài",
-  imageUrl: "/images/xoai.png"
-}, {
-  name: "Bơ",
-  imageUrl: "/images/bo.png"
-}, {
-  name: "Ổi",
-  imageUrl: "/images/oi.png"
-}, {
-  name: "Dứa",
-  imageUrl: "/images/dua.png"
-}, {
-  name: "Táo",
-  imageUrl: "/images/tao.png"
-}, {
-  name: "Vải",
-  imageUrl: "/images/vai.png"
-}, {
-  name: "Chuối",
-  imageUrl: "/images/vai.png"
+  imageUrl: "/images/matcha.png",
+  quantity: 10
 }, {
   name: "Soda",
-  imageUrl: "/images/soda.png"
+  imageUrl: "/images/soda.png",
+  quantity: 10
+}, {
+  name: "Chocolate",
+  imageUrl: "/images/chocolate.png",
+  quantity: 6
+}, {
+  name: "Trân Châu",
+  imageUrl: "/images/tran-chau.png",
+  quantity: 6
+}, {
+  name: "Mật Ong",
+  imageUrl: "/images/mat-ong.png",
+  quantity: 6
+}, {
+  name: "Chanh",
+  imageUrl: "/images/chanh.png",
+  quantity: 6
+}, {
+  name: "Đào",
+  imageUrl: "/images/dao.png",
+  quantity: 6
+}, {
+  name: "Sả",
+  imageUrl: "/images/sa.png",
+  quantity: 6
+}, {
+  name: "Dâu Tây",
+  imageUrl: "/images/dau-tay.png",
+  quantity: 6
+}, {
+  name: "Xoài",
+  imageUrl: "/images/xoai.png",
+  quantity: 6
+}, {
+  name: "Bơ",
+  imageUrl: "/images/bo.png",
+  quantity: 6
+}, {
+  name: "Ổi",
+  imageUrl: "/images/oi.png",
+  quantity: 6
+}, {
+  name: "Dứa",
+  imageUrl: "/images/dua.png",
+  quantity: 6
+}, {
+  name: "Táo",
+  imageUrl: "/images/tao.png",
+  quantity: 6
+}, {
+  name: "Vải",
+  imageUrl: "/images/vai.png",
+  quantity: 6
+}, {
+  name: "Chuối",
+  imageUrl: "/images/vai.png",
+  quantity: 6
 }, {
   name: "Dừa",
-  imageUrl: "/images/dua.png"
+  imageUrl: "/images/dua.png",
+  quantity: 6
 }, {
   name: "Cam",
-  imageUrl: "/images/cam.png"
+  imageUrl: "/images/cam.png",
+  quantity: 6
 }, {
   name: "Tắc",
-  imageUrl: "/images/dua.png"
+  imageUrl: "/images/dua.png",
+  quantity: 6
 }, {
   name: "Chanh Dây",
-  imageUrl: "/images/dua.png"
+  imageUrl: "/images/dua.png",
+  quantity: 6
 }, {
   name: "Việt Quất",
-  imageUrl: "/images/dua.png"
+  imageUrl: "/images/dua.png",
+  quantity: 6
 }, {
   name: "Gừng",
-  imageUrl: "/images/dua.png"
+  imageUrl: "/images/dua.png",
+  quantity: 6
 }];
 exports.cardTypes = cardTypes;
 var recipes = {
