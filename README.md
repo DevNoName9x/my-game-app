@@ -1,6 +1,78 @@
-# Getting Started with Create React App
+<!-- markdownlint-disable MD046 -->
+# Drink Brewing Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## English Description
+
+    A fun and interactive card-based game where players collect ingredients and brew various drinks. The game features:
+
+    - Random card collection from an ingredient pool
+    - Recipe discovery and management
+    - Drink brewing mechanics
+    - Sorting and organizing collected cards and brewed drinks
+    - Vietnamese language support
+
+## Mô tả tiếng Việt
+
+    Một trò chơi thẻ tương tác thú vị nơi người chơi thu thập nguyên liệu và pha chế các loại đồ uống khác nhau. Trò chơi có các tính năng:
+
+    - Thu thập thẻ ngẫu nhiên từ bộ nguyên liệu
+    - Khám phá và quản lý công thức
+    - Cơ chế pha chế đồ uống
+    - Sắp xếp và tổ chức các thẻ đã thu thập và đồ uống đã pha chế
+    - Hỗ trợ ngôn ngữ tiếng Việt
+
+## Link GitHub
+
+GitHub Repository: [https://github.com/DevNoName9x/my-game-app](https://github.com/DevNoName9x/my-game-app)
+
+## Công nghệ sử dụng / Technologies Used
+
+- **Frontend**: React.js, React Hooks (useState, useCallback, useMemo)
+- **Styling**: CSS, Bootstrap
+- **State Management**: React Hooks
+- **Notifications**: React-Toastify
+- **Build Tool**: Create React App
+
+## Hướng dẫn cài đặt / Installation Guide
+
+### Yêu cầu hệ thống / System Requirements
+
+- Node.js (v14.0.0 trở lên)
+- npm (v6.0.0 trở lên)
+
+### Các bước cài đặt / Installation Steps
+
+1. **Clone repository**
+
+    ```bash
+        git clone https://github.com/DevNoName9x/my-game-app.git
+        cd my-game-app
+    ```
+
+2. **Cài đặt dependencies**
+
+   ```bass
+        npm install
+   ```
+
+3. **Chạy ứng dụng ở chế độ development**
+
+   ```bash
+   npm start
+   ```
+
+4. **Truy cập ứng dụng**
+   Mở trình duyệt và truy cập [http://localhost:3000](http://localhost:3000)
+
+### Cài đặt cho môi trường production
+
+```bash
+npm run build
+```
+
+## Getting Started with Create React App
+
+    This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
