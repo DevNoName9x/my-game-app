@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import IngredientList from "./IngredientList";
 import BrewableDrinks from "./BrewableDrinks";
 import BrewedDrinks from "./BrewedDrinks";
@@ -13,26 +13,31 @@ function CardCollection() {
   const [brewedDrinks, setBrewedDrinks] = useState([]);
   const [ingredientPool, setIngredientPool] = useState(cardTypes);
 
-  const initialRecipePool = Object.entries(recipes);
+  // Khởi tạo recipe pool và displayed recipes sử dụng useMemo để tránh tính toán lại
+  const { initialDisplayedRecipes, initialRecipePool } = useMemo(() => {
+    const allRecipes = Object.entries(recipes);
+    const shuffled = [...allRecipes].sort(() => Math.random() - 0.5);
+    const randomRecipes = shuffled.slice(0, 3);
+    
+    const remainingRecipes = allRecipes.filter(
+      ([name]) => !randomRecipes.some(([recipeName]) => recipeName === name)
+    );
+    
+    return {
+      initialDisplayedRecipes: randomRecipes,
+      initialRecipePool: remainingRecipes
+    };
+  }, []);
 
-  // Xáo trộn danh sách initialRecipePool
-  const shuffled = [...initialRecipePool].sort(() => Math.random() - 0.5);
-  // Lấy 3 phần tử đầu tiên từ danh sách đã xáo trộn
-  const randomRecipes = shuffled.slice(0, 3);
-  const [displayedRecipes, setDisplayedRecipes] = useState(randomRecipes);
-
-  // Tính danh sách số lượng công thức còn lại
-  const remainingRecipes = initialRecipePool.filter(
-    ([name]) => !randomRecipes.some(([recipeName]) => recipeName === name)
-  );
-  const [recipePool, setRecipePool] = useState(remainingRecipes);
+  const [displayedRecipes, setDisplayedRecipes] = useState(initialDisplayedRecipes);
+  const [recipePool, setRecipePool] = useState(initialRecipePool);
 
   /**
    * Hàm thu thập thẻ ngẫu nhiên từ ingredientPool
    * Lấy ngẫu nhiên 2 thẻ từ tổng số thẻ trong ingredientPool
    * Sau khi lấy, giảm số lượng của các thẻ đã lấy trong ingredientPool
    */
-  const collectCards = () => {
+  const collectCards = useCallback(() => {
     // Tính tổng số lượng thẻ trong ingredientPool
     const total = ingredientPool.reduce((acc, card) => acc + card.quantity, 0);
 
@@ -94,72 +99,73 @@ function CardCollection() {
     }
 
     // Cập nhật state
-    setCollectedCards([...collectedCards, ...newCards]);
+    setCollectedCards(prevCards => [...prevCards, ...newCards]);
     setIngredientPool(newPool);
-  };
+  }, [ingredientPool]);
 
-  const sortDrinks = () => {
-    const sortedDrinks = [...brewedDrinks].sort((a, b) =>
-      a.name.localeCompare(b.name, "vi")
+  const sortDrinks = useCallback(() => {
+    setBrewedDrinks(prevDrinks => 
+      [...prevDrinks].sort((a, b) => a.name.localeCompare(b.name, "vi"))
     );
-    setBrewedDrinks(sortedDrinks);
-    const sortedCards = [...collectedCards].sort((a, b) =>
-      a.name.localeCompare(b.name, "vi")
+    
+    setCollectedCards(prevCards => 
+      [...prevCards].sort((a, b) => a.name.localeCompare(b.name, "vi"))
     );
-    setCollectedCards(sortedCards);
-  };
+  }, []);
 
-  const brewDrink = (drinkName, ingredients) => {
-    const canBrew = ingredients.every((ingredient) =>
-      collectedCards.map((card) => card.name).includes(ingredient)
+  const brewDrink = useCallback((drinkName, ingredients) => {
+    // Kiểm tra xem có đủ nguyên liệu không
+    const hasAllIngredients = ingredients.every((ingredient) =>
+      collectedCards.some((card) => card.name === ingredient)
     );
-    if (canBrew) {
-
-      // Tạo map đếm số lần cần loại bỏ
-      const excludeCount = {};
-      for (const name of ingredients) {
-        excludeCount[name] = (excludeCount[name] || 0) + 1;
-      }
-
-      const result = [];
-
-      for (const card of collectedCards) {
-        if (excludeCount[card.name]) {
-          excludeCount[card.name]--;
-          continue; // bỏ qua phần tử này
-        }
-        result.push(card);
-      }
-      setCollectedCards(result);
-
-      // Loại bỏ thẻ có tên drinkName trong displayedRecipes
-      let updatedDisplayedRecipes = displayedRecipes.filter(
-        ([index, card]) => card.name !== drinkName
-      );
-      // Xáo trộn danh sách initialRecipePool
-      const shuffled = [...recipePool].sort(() => Math.random() - 0.5);
-      const randomRecipes = shuffled.slice(0, 1);
-      // Thêm công thức mới vào danh sách
-      updatedDisplayedRecipes = [...updatedDisplayedRecipes, ...randomRecipes];
-      setDisplayedRecipes(updatedDisplayedRecipes);
-
-      // Loại bỏ công thức đã pha chế
-      const remainingRecipes = recipePool.filter(
-        ([name]) => !randomRecipes.some(([recipeName]) => recipeName === name)
-      );
-      setRecipePool(remainingRecipes);
-
-      // Thêm thẻ có tên drinkName vào brewedDrinks
-      const drink = recipes.find((recipe) => recipe.name === drinkName);
-      const newBrewedDrinks = [...brewedDrinks, drink];
-      setBrewedDrinks(newBrewedDrinks);
-
-      toast.success(`Bạn đã pha chế thành công ${drinkName}!`);
-
-      // Gọi hàm thay thế công thức tại vị trí vừa pha chế
-      // replaceRecipeCallback(index, newBrewedDrinks);
+    
+    if (!hasAllIngredients) {
+      toast.error("Bạn không có đủ nguyên liệu để pha chế!");
+      return;
     }
-  };
+
+    // Tạo map đếm số lần cần loại bỏ
+    const excludeCount = {};
+    for (const name of ingredients) {
+      excludeCount[name] = (excludeCount[name] || 0) + 1;
+    }
+
+    // Lọc ra các thẻ không được sử dụng trong công thức
+    const remainingCards = collectedCards.filter(card => {
+      if (excludeCount[card.name] && excludeCount[card.name] > 0) {
+        excludeCount[card.name]--;
+        return false; // Loại bỏ thẻ này
+      }
+      return true; // Giữ lại thẻ này
+    });
+    
+    setCollectedCards(remainingCards);
+
+    // Cập nhật danh sách công thức hiển thị
+    const updatedDisplayedRecipes = displayedRecipes.filter(
+      ([_, recipe]) => recipe.name !== drinkName
+    );
+    
+    // Lấy công thức mới từ pool
+    const shuffled = [...recipePool].sort(() => Math.random() - 0.5);
+    const newRecipe = shuffled.slice(0, 1);
+    
+    // Cập nhật danh sách công thức hiển thị và pool
+    const finalDisplayedRecipes = [...updatedDisplayedRecipes, ...newRecipe];
+    setDisplayedRecipes(finalDisplayedRecipes);
+    
+    // Cập nhật recipe pool
+    const updatedRecipePool = recipePool.filter(
+      ([name]) => !newRecipe.some(([recipeName]) => recipeName === name)
+    );
+    setRecipePool(updatedRecipePool);
+
+    // Thêm đồ uống đã pha chế vào danh sách
+    const drink = recipes.find((recipe) => recipe.name === drinkName);
+    setBrewedDrinks(prevDrinks => [...prevDrinks, drink]);
+
+    toast.success(`Bạn đã pha chế thành công ${drinkName}!`);
+  }, [collectedCards, displayedRecipes, recipePool]);
 
   return (
     <div className="container-fluid my-2">
