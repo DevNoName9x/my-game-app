@@ -1,25 +1,28 @@
 // src/components/IngredientList.js
 import React from "react";
 import CardItem from "./CardItem";
-import { cardTypes } from "../data/drinksData";
 
 function IngredientList({ collectedCards }) {
-  const getImageUrl = (cardName) => {
-    const card = cardTypes.find((item) => item.name === cardName);
-    return card ? card.imageUrl : "";
-  };
+  // Nhóm các thẻ theo tên và đếm số lượng
+  const groupedCard = [];
 
-  const groupedCards = collectedCards.reduce((acc, card) => {
-    acc[card] = (acc[card] || 0) + 1;
-    return acc;
-  }, {});
+  collectedCards.forEach((item) => {
+    const existing = groupedCard.find(
+      (x) => x.name === item.name && x.imageUrl === item.imageUrl
+    );
+    if (existing) {
+      existing.count++;
+    } else {
+      groupedCard.push({ ...item, count: 1 });
+    }
+  });
 
-  const cardsList = Object.entries(groupedCards);
-
+  const cardsList = Object.entries(groupedCard);
   return (
     <div>
       <h4 style={{ height: "33px" }}>
-        Thẻ Nguyên Liệu: <span className="badge bg-success ms-2">{collectedCards.length} </span>
+        Thẻ Nguyên Liệu:{" "}
+        <span className="badge bg-success ms-2">{collectedCards.length} </span>
       </h4>
       {collectedCards.length === 0 ? (
         <p className="text-muted">Chưa có thẻ nào được thu thập.</p>
@@ -32,18 +35,26 @@ function IngredientList({ collectedCards }) {
             maxHeight: "500px",
           }}
         >
-          {cardsList.map(([card, count], index) => (
-            <div
-              key={index}
-              style={{
-                flex: "0 0 32%", // Luôn 3 ô/dòng
-                minWidth: "100px",
-                margin: "2px",
-              }}
-            >
-              <CardItem card={card} count={count} imageUrl={getImageUrl(card)} />
-            </div>
-          ))}
+          {cardsList.map(([index, card]) => {
+            // Tách name và imageUrl từ key
+
+            return (
+              <div
+                key={index}
+                style={{
+                  flex: "0 0 32%", // Luôn 3 ô/dòng
+                  minWidth: "100px",
+                  margin: "2px",
+                }}
+              >
+                <CardItem
+                  cardName={card.name}
+                  count={card.count}
+                  imageUrl={card.imageUrl}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

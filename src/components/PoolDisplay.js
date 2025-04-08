@@ -1,28 +1,21 @@
 import React from "react";
 
-function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipes }) {
-  // Tính số lượng thẻ trong ingredientPool
-  const getIngredientPoolStats = () => {
-    const total = ingredientPool.length;
-    const grouped = ingredientPool.reduce((acc, card) => {
-      acc[card] = (acc[card] || 0) + 1;
-      return acc;
-    }, {});
-    return { total, grouped };
-  };
-
-  const { total: ingredientTotal, grouped: ingredientGrouped } = getIngredientPoolStats();
-
-  // Tính số công thức còn lại trong pool
-  // Nếu displayedRecipes là null, coi như không có công thức đang hiển thị
-  const displayedCount = displayedRecipes && displayedRecipes.length > 0 ? displayedRecipes.length : 0;
-  const recipeTotal = recipePool.length - brewedDrinks.length - displayedCount;
+function PoolDisplay({
+  ingredientPool,
+  recipePool,
+}) {
+ const getTotalIngredient = () => {
+   return ingredientPool.reduce((acc, card) => acc + card.quantity, 0);
+ }
+ const getTotalRecipe = () => {
+  return recipePool.length 
+ }
 
   return (
     <div className="row mb-4">
       {/* Pool Thẻ Nguyên Liệu - col-9 */}
-      <div className="col-9">
-        <h5>Pool Thẻ Nguyên Liệu: {ingredientTotal} thẻ</h5>
+      <div className="col-8">
+        <h5>Pool Thẻ Nguyên Liệu: {getTotalIngredient()} thẻ</h5>
         <div
           style={{
             display: "flex",
@@ -30,12 +23,11 @@ function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipe
             overflowY: "auto",
             maxHeight: "100px",
             padding: "10px",
-           
           }}
         >
-          {Object.entries(ingredientGrouped).map(([card, count]) => (
+          {Object.entries(ingredientPool).map(([index,card]) => (
             <div
-              key={card}
+              key={index}
               style={{
                 flex: "0 0 25%",
                 minWidth: "150px",
@@ -46,16 +38,40 @@ function PoolDisplay({ ingredientPool, recipePool, brewedDrinks, displayedRecipe
                 textAlign: "center",
               }}
             >
-              <p style={{ margin: "0" }}>
-                {card}: {count}
-              </p>
+              <p style={{ margin: "0" }}>{card.name}</p>
             </div>
           ))}
         </div>
       </div>
       {/* Pool Công Thức - col-3 */}
-      <div className="col-3">
-        <h5>Pool Công Thức: {recipeTotal} công thức</h5>
+      <div className="col-4">
+        <h5>Pool Công Thức: {getTotalRecipe()} công thức</h5>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            overflowY: "auto",
+            maxHeight: "100px",
+            padding: "10px",
+          }}
+        >
+          {recipePool.map(([index,recipe]) => (
+            <div
+              key={index}
+              style={{
+                flex: "0 0 33%",
+                minWidth: "150px",
+                marginBottom: "10px",
+                padding: "5px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                textAlign: "center",
+              }}
+            >
+              <p style={{ margin: "0" }}>{recipe.name}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

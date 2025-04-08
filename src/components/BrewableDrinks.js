@@ -1,62 +1,22 @@
-import React, { useMemo } from "react";
+import React from "react";
 
-function BrewableDrinks({
-  recipes,
-  collectedCards,
-  brewDrink,
-  recipePool,
-  brewedDrinks,
-  displayedRecipes,
-  setDisplayedRecipes,
-}) {
+function BrewableDrinks({ collectedCards, brewDrink, displayedRecipes }) {
+  const collectedIngredients = collectedCards.map((c) => c.name);
   const canBrew = (recipeIngredients) => {
     return recipeIngredients.every((ingredient) =>
-      collectedCards.includes(ingredient)
+      collectedIngredients.includes(ingredient)
     );
-  };
-
-  // Nếu displayedRecipes là null hoặc rỗng, chọn ngẫu nhiên 3 công thức ban đầu
-  const initialRecipes = useMemo(() => {
-    if (!displayedRecipes || displayedRecipes.length === 0) {
-      const unusedRecipes = recipePool.filter(
-        ([name]) => !brewedDrinks.includes(name)
-      );
-      const shuffled = [...unusedRecipes].sort(() => Math.random() - 0.5);
-      return shuffled.slice(0, Math.min(3, unusedRecipes.length));
-    }
-    return displayedRecipes;
-  }, [recipePool, brewedDrinks, displayedRecipes]);
-
-  // Hàm thay thế công thức tại vị trí đã pha chế
-  const replaceRecipeAtIndex = (index, newBrewedDrinks) => {
-    const unusedRecipes = recipePool.filter(
-      ([name]) =>
-        !newBrewedDrinks.includes(name) &&
-        !displayedRecipes.some(([dName]) => dName === name)
-    );
-    if (unusedRecipes.length > 0) {
-      const shuffled = [...unusedRecipes].sort(() => Math.random() - 0.5);
-      const newRecipe = shuffled[0]; // Lấy công thức ngẫu nhiên đầu tiên
-      const newDisplayedRecipes = [...displayedRecipes];
-      newDisplayedRecipes[index] = newRecipe; // Thay thế tại vị trí index
-      setDisplayedRecipes(newDisplayedRecipes);
-    } else {
-      // Nếu không còn công thức nào, xóa công thức tại vị trí đó
-      const newDisplayedRecipes = [...displayedRecipes];
-      newDisplayedRecipes.splice(index, 1);
-      setDisplayedRecipes(newDisplayedRecipes);
-    }
   };
 
   return (
     <>
       <h4 style={{ height: "33px" }}>Đồ Uống Có Thể Pha Chế:</h4>
-      {initialRecipes.length === 0 ? (
+      {displayedRecipes.length === 0 ? (
         <p className="text-muted mt-4">Không còn công thức nào để hiển thị.</p>
       ) : (
         <div className="row">
-          {initialRecipes.map(
-            ([drinkName, { ingredients, imageUrl }], index) => {
+          {displayedRecipes.map(
+            ([index, { id, name, ingredients, imageUrl }]) => {
               const canMake = canBrew(ingredients);
               const validImageUrl =
                 imageUrl && imageUrl.trim() !== ""
@@ -71,34 +31,31 @@ function BrewableDrinks({
                       <img
                         src={validImageUrl}
                         className={`card-img-top `}
-                        alt={drinkName}
+                        alt={id}
                       />
                       <h6 className="card-title" style={{ height: "40px" }}>
-                        {drinkName}
+                        {name}
                       </h6>
                       <p className="card-text" style={{ height: "120px" }}>
-                        {ingredients.map((ingredient, idx) => (
-                          <span key={idx}>
-                            {ingredient}{" "}
-                            {collectedCards.includes(ingredient) && (
-                              <span className="text-success">✔</span>
-                            )}
-                            <br />
-                          </span>
-                        ))}
+                        {ingredients.map((ingredient) => {
+                          return (
+                            <span key={ingredient}>
+                              {ingredient}{" "}
+                              {collectedIngredients.includes(ingredient) && (
+                                <span className="text-success">✔</span>
+                              )}
+                              <br />
+                            </span>
+                          );
+                        })}
                       </p>
                       <button
                         className={`btn ${
                           canMake ? "btn-success" : "btn-secondary"
                         }`}
-                        onClick={() =>
-                          brewDrink(
-                            drinkName,
-                            ingredients,
-                            index,
-                            replaceRecipeAtIndex
-                          )
-                        }
+                        onClick={() => {
+                          brewDrink(name, ingredients);
+                        }}
                         disabled={!canMake}
                       >
                         Pha Chế
