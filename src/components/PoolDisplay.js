@@ -34,8 +34,8 @@ function PoolDisplay({
                 minWidth: "150px",
                 marginBottom: "10px",
                 padding: "5px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
+                // border: "1px solid #ccc",
+                // borderRadius: "4px",
                 textAlign: "center",
               }}
             >
@@ -64,8 +64,8 @@ function PoolDisplay({
                 minWidth: "150px",
                 marginBottom: "10px",
                 padding: "5px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
+                // border: "1px solid #ccc",
+                // borderRadius: "4px",
                 textAlign: "center",
               }}
             >
