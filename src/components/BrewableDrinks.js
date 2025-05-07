@@ -1,5 +1,5 @@
 import React from "react";
-
+import { truncateByWords } from "../utils/stringUtils";
 function BrewableDrinks({ collectedCards, brewDrink, displayedRecipes }) {
   const collectedIngredients = collectedCards.map((c) => c.name);
   const canBrew = (recipeIngredients) => {
@@ -33,8 +33,8 @@ function BrewableDrinks({ collectedCards, brewDrink, displayedRecipes }) {
                         className={`card-img-top `}
                         alt={id}
                       />
-                      <h6 className="card-title" style={{ height: "40px" }}>
-                        {name}
+                      <h6 className="card-title" >
+                        {truncateByWords(name, 20)}
                       </h6>
                       <p className="card-text" style={{ height: "120px" }}>
                         {ingredients.map((ingredient) => {

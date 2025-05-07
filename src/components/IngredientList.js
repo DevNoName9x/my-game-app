@@ -1,8 +1,12 @@
 // src/components/IngredientList.js
 import React from "react";
 import CardItem from "./CardItem";
+import { useResponsiveHeight } from "../utils/screenUtils";
 
 function IngredientList({ collectedCards }) {
+  // Sử dụng hook với tỷ lệ 0.5 (50% chiều cao màn hình)
+  const maxHeight = useResponsiveHeight(React, 0.5);
+
   // Nhóm các thẻ theo tên và đếm số lượng
   const groupedCard = [];
 
@@ -32,7 +36,7 @@ function IngredientList({ collectedCards }) {
             display: "flex",
             flexWrap: "wrap",
             overflowY: "auto",
-            maxHeight: "500px",
+            maxHeight: maxHeight,
           }}
         >
           {cardsList.map(([index, card]) => {

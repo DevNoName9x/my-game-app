@@ -1,4 +1,5 @@
 import React from "react";
+import { truncateByWords } from "../utils/stringUtils";
 
 function PoolDisplay({
   ingredientPool,
@@ -68,7 +69,7 @@ function PoolDisplay({
                 textAlign: "center",
               }}
             >
-              <p style={{ margin: "0" }}>{recipe.name}</p>
+              <p style={{ margin: "0" }}>{ truncateByWords(recipe.name, 20)}</p>
             </div>
           ))}
         </div>

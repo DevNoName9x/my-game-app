@@ -1,9 +1,13 @@
 // src/components/BrewedDrinks.js
 import React from "react";
 import CardItem from "./CardItem";
+import { useResponsiveHeight } from "../utils/screenUtils";
 
 function BrewedDrinks({ brewedDrinks }) {
   const drinksList = Object.entries(brewedDrinks);
+  // Sử dụng hook với tỷ lệ 0.5 (50% chiều cao màn hình)
+  const maxHeight = useResponsiveHeight(React, 0.5);
+
   return (
     <div>
       <h4 style={{ height: "33px" }}>
@@ -18,7 +22,7 @@ function BrewedDrinks({ brewedDrinks }) {
             display: "flex",
             flexWrap: "wrap",
             overflowY: "auto",
-            maxHeight: "500px",
+            maxHeight: maxHeight,
           }}
         >
           {drinksList.map(([index, drink]) => (
@@ -26,7 +30,7 @@ function BrewedDrinks({ brewedDrinks }) {
               key={index}
               style={{
                 flex: "0 0 32%", // Luôn 3 ô/dòng
-                minWidth: "100px",
+                // minWidth: "100px",
                 margin: "2px",
               }}
             >
